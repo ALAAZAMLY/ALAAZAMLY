@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page not found | Alaa Zamly</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#EBEBEB">
+<script>
+(function () {
+  var base = "/ALAAZAMLY";
+  var path = window.location.pathname;
+  var route = path.indexOf(base + "/") === 0 ? path.slice(base.length + 1) : "";
+  route = route.replace(/^\\/+|\\/+$/g, "");
+
+  var validProjects = [
+    "manukora", "pandatales", "serge-de-nimes", "hello-fresh", "cac",
+    "things-of-media", "phm", "ovara", "barista-prime", "lune",
+    "petopia", "virtuart", "foody", "brandist", "vanelia"
+  ];
+
+  var isProject = route.indexOf("project/") === 0 &&
+    validProjects.indexOf(route.slice("project/".length)) !== -1;
+  var isSection = ["work", "about", "contact"].indexOf(route) !== -1;
+
+  if (isProject || isSection) {
+    var hashRoute = route;
+    window.location.replace(
+      base + "/#" + hashRoute + window.location.search
+    );
+  }
+})();
+</script>
+<link rel="icon" href="/ALAAZAMLY/favicon.ico" sizes="any">
+<link rel="preload" href="/ALAAZAMLY/assets/fonts/CanelaCondensed-Medium.woff" as="font" type="font/woff" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ALAAZAMLY/assets/css/style.css?v=870d7d3e">
+</head>
+<body data-p="home">
+<div class="bg" aria-hidden="true"><i></i></div>
+<main>
+<section class="page panel" style="display:grid;place-items:center;text-align:center;padding:var(--pad);overflow:auto">
+  <div>
+    <h1 class="d" style="font-size:clamp(88px,18vw,260px)">404</h1>
+    <p class="sub" style="margin:16px auto 28px">That page wandered off. Let’s get you back to the work.</p>
+    <div class="row" style="justify-content:center;margin:0"><a class="pill solid" href="/ALAAZAMLY/">Back home ↗</a><a class="pill" href="/ALAAZAMLY/work/">See the work ↗</a></div>
+  </div>
+</section>
+</main>
+</body>
+</html>
