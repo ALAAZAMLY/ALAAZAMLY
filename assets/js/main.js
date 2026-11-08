@@ -151,7 +151,7 @@ if(document.readyState==="complete")prog.load=1;else addEventListener("load",()=
 let mx=null;const onMove=e=>{mx=e.clientX};addEventListener("pointermove",onMove,{passive:true});addEventListener("pointerdown",onMove,{passive:true});
 
 // ---- falling cards ----
-let curWant=0,cards=[],collected=0,landing=0,sinceSpawn=0,gap=.3,lastX=null,pd=0,lx=0,finished=false;
+let curWant=0,cards=[],collected=0,landing=0,sinceSpawn=0,gap=.3,lastX=null,pd=0,lx=0,finished=false,forceTimer=null;
 const retrigger=(el,cls)=>{el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls)};
 function spawn(idx){
   const p=P[idx],img=IMG[slug(p[0])],s=rnd(.82,1.2),w=(innerWidth<900?clamp(innerWidth*.21,72,120):clamp(innerWidth*.095,110,170))*s,h=w*1.4;
@@ -172,6 +172,9 @@ function collect(c){            // the moment a card touches the laptop it disap
   retrigger(lapi,"bump");retrigger(lapi,"hit");lapi.classList.add("proc");
 }
 function finish(){
+  if(finished)return;
+  finished=true;
+  if(forceTimer!==null)clearTimeout(forceTimer);
   removeEventListener("pointermove",onMove);removeEventListener("pointerdown",onMove);
   pct.textContent="100%";lbl.textContent="Everything’s here. Welcome.";lapi.classList.remove("proc");retrigger(lapi,"hit");
   setTimeout(()=>{
@@ -179,8 +182,10 @@ function finish(){
     setTimeout(()=>{ld.remove();document.body.classList.remove("ld-out")},500);
   },260);
 }
+forceTimer=setTimeout(finish,6500); // Never keep the portfolio locked behind the intro animation.
 let last=performance.now();
 function frame(now){
+  if(finished)return;
   const dt=Math.min(.05,(now-last)/1000)*2.6;last=now;
   const rr=real(),cx0=innerWidth/2;
   cards=cards.filter(c=>!c.done);
